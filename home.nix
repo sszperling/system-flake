@@ -14,6 +14,7 @@
     discord
     element-desktop
     telegram-desktop
+    feishin
     zsh-powerlevel10k
     meslo-lgs-nf
   ];
