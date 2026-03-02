@@ -15,19 +15,18 @@
   };
 
   outputs = { self, nixpkgs, home-manager, nixos-hardware, fingerprint, ... }@inputs: {
-    nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
+    nixosConfigurations.nixpad = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [
-        # Import the previous configuration.nix we used,
-        # so the old configuration file still takes effect
-        ./configuration.nix
+        ./hardware
+        ./system
 	      nixos-hardware.nixosModules.lenovo-thinkpad-x280
 	      fingerprint.nixosModules."06cb-009a-fingerprint-sensor"
         home-manager.nixosModules.home-manager
 	      {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
-          home-manager.users.sapph = ./home.nix;
+          home-manager.users.sapph = ./home;
 	      }
       ];
     };
