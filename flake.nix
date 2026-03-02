@@ -14,10 +14,10 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, nixos-hardware, fingerprint, ... }@inputs: {
+  outputs = { self, nixpkgs, ... }@inputs: {
     nixosConfigurations.nixpad = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
-      modules = [
+      modules = with inputs; [
         ./hardware
         ./system
 	      nixos-hardware.nixosModules.lenovo-thinkpad-x280

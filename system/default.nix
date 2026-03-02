@@ -8,6 +8,7 @@
     ./locale.nix
     ./misc.nix
     ./networking.nix
+    ./security.nix
     ./sound.nix
     ./users.nix
   ];
