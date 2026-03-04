@@ -8,5 +8,8 @@
     shell = pkgs.zsh;
   };
 
+  home-manager.users.${username} = ../home;
+  home-manager.extraSpecialArgs = { inherit username; };
+
   programs.zsh.enable = true;
 }

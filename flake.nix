@@ -25,12 +25,6 @@
           nixos-hardware.nixosModules.lenovo-thinkpad-x280
           fingerprint.nixosModules."06cb-009a-fingerprint-sensor"
           home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.${username} = ./home;
-            home-manager.extraSpecialArgs = { inherit username; };
-          }
         ];
         specialArgs = { inherit username; };
       };
