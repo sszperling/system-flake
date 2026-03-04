@@ -1,4 +1,4 @@
-{ pkgs, username, ... }:
+{ pkgs, username, homedir, ... }:
 
 {
   users.users.${username} = {
@@ -9,7 +9,7 @@
   };
 
   home-manager.users.${username} = ../home;
-  home-manager.extraSpecialArgs = { inherit username; };
+  home-manager.extraSpecialArgs = { inherit username homedir; };
 
   programs.zsh.enable = true;
 }

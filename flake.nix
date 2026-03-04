@@ -18,6 +18,7 @@
     nixosConfigurations.nixpad =
       let
         username = "sapph";
+        homedir = "/home/${username}";
       in nixpkgs.lib.nixosSystem {
         modules = with inputs; [
           ./hardware
@@ -26,7 +27,7 @@
           fingerprint.nixosModules."06cb-009a-fingerprint-sensor"
           home-manager.nixosModules.home-manager
         ];
-        specialArgs = { inherit username; };
+        specialArgs = { inherit username homedir; };
       };
   };
 }
