@@ -15,21 +15,25 @@
   };
 
   outputs = { self, nixpkgs, ... }@inputs: {
-    nixosConfigurations.nixpad = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
-      modules = with inputs; [
-        ./hardware
-        ./system
-	      nixos-hardware.nixosModules.lenovo-thinkpad-x280
-	      fingerprint.nixosModules."06cb-009a-fingerprint-sensor"
-        home-manager.nixosModules.home-manager
-	      {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-          home-manager.users.sapph = ./home;
-	      }
-      ];
-    };
+    nixosConfigurations.nixpad =
+      let
+        username = "sapph";
+      in nixpkgs.lib.nixosSystem {
+        modules = with inputs; [
+          ./hardware
+          ./system
+          nixos-hardware.nixosModules.lenovo-thinkpad-x280
+          fingerprint.nixosModules."06cb-009a-fingerprint-sensor"
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.${username} = ./home;
+            home-manager.extraSpecialArgs = { inherit username; };
+          }
+        ];
+        specialArgs = { inherit username; };
+      };
   };
 }
 

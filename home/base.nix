@@ -1,8 +1,8 @@
-{ pkgs, ... }:
+{ pkgs, username, ... }:
 
 {
-  home.username = "sapph";
-  home.homeDirectory = "/home/sapph";
+  home.username = username;
+  home.homeDirectory = "/home/${username}";
   home.stateVersion = "25.11";
   programs.home-manager.enable = true;
 }

@@ -1,7 +1,7 @@
-{ pkgs, ... }:
+{ pkgs, username, ... }:
 
 {
-  users.users.sapph = {
+  users.users.${username} = {
     isNormalUser = true;
     description = "Safiro Szperling";
     extraGroups = [ "networkmanager" "wheel" ];
