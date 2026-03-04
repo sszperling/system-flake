@@ -32,7 +32,7 @@
     settings = {
       user = {
         name  = "Safiro Szperling";
-        email = "zebaszp@example.com";
+        email = "zebaszp@gmail.com";
       };
       init.defaultBranch = "main";
       alias = {
