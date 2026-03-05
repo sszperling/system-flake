@@ -14,7 +14,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, ... }@inputs: {
+  outputs = { self, nixpkgs, home-manager, ... }@inputs: {
     nixosConfigurations.nixpad =
       let
         username = "sapph";
@@ -29,6 +29,20 @@
         ];
         specialArgs = { inherit username homedir; };
       };
+
+    homeConfigurations.safiros =
+      let
+        username = "safiros";
+        homedir = "/Users/${username}";
+      in home-manager.lib.homeManagerConfiguration {
+        pkgs = import nixpkgs {
+          config = { allowUnfree = true; };
+          system = "aarch64-darwin";
+        };
+        modules = [ ./home ];
+        extraSpecialArgs = { inherit username homedir; };
+      };
+    #defaultPackage.aarch64-darwin = self.homeConfigurations.safiros.activationPackage;
   };
 }
 
