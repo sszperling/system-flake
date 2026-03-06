@@ -4,8 +4,11 @@
   home.packages = with pkgs; [
     bat
     git-crypt
-    zsh-powerlevel10k
+    httpie
+    jq
     meslo-lgs-nf
+    tree
+    zsh-powerlevel10k
   ];
 
   programs.zsh = {
