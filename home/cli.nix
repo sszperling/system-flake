@@ -1,14 +1,17 @@
 { config, pkgs, lib, ... }:
 
 {
+  fonts.fontconfig.enable = true;
+
   home.packages = with pkgs; [
     bat
     git-crypt
+    htop
     httpie
     jq
-    meslo-lgs-nf
+    kitty
+    nerd-fonts.hack
     tree
-    zsh-powerlevel10k
   ];
 
   programs.zsh = {
@@ -17,27 +20,14 @@
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
 
-    plugins = [
-      {
-        name = "powerlevel10k-config";
-        src = ./p10k;
-        file = "p10k.zsh";
-      }
-      {
-        name = "zsh-powerlevel10k";
-        src = "${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/";
-        file = "powerlevel10k.zsh-theme";
-      }
-    ];
-
-    initContent = lib.mkBefore ''
-      if [[ -r "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh" ]]; then
-        source "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh"
-      fi
-    '';
-
     shellAliases = {
       ll = "ls -l";
+    };
+
+    oh-my-zsh = {
+      enable = true;
+      theme = "agnoster";
+      extraConfig = "export DEFAULT_USER=${config.home.username}";
     };
   };
 
