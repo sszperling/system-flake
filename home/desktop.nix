@@ -4,6 +4,8 @@ lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
   home.packages = with pkgs; [
     brightnessctl
     font-awesome
+    nautilus
+    networkmanagerapplet
     rofi
     seahorse
   ];
