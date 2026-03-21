@@ -6,11 +6,11 @@
   home.packages = with pkgs; [
     bat
     fastfetch
+    foot
     git-crypt
     htop
     httpie
     jq
-    kitty
     nerd-fonts.hack
     tree
   ];

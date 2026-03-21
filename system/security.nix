@@ -21,6 +21,7 @@
         enable = true;
         control = "sufficient";
       };
+      services.swaylock = {};
     };
   };
 }
