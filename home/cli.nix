@@ -6,13 +6,16 @@
   home.packages = with pkgs; [
     bat
     fastfetch
-    foot
     git-crypt
     htop
     httpie
     jq
     nerd-fonts.hack
     tree
+  ] ++ lib.optionals pkgs.stdenv.hostPlatform.isLinux [
+    foot # only provided for linux
+  ] ++ lib.optionals pkgs.stdenv.hostPlatform.isMacOS [
+    iterm2
   ];
 
   programs.zsh = {
