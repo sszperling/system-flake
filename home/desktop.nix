@@ -129,7 +129,10 @@ lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
 
   wayland.windowManager.sway = let ModKey = "Mod4"; in {
     enable = true;
-    systemd.enable = true;
+    systemd = {
+      enable = true;
+      dbusImplementation = "broker";
+    };
     package = pkgs.sway;
     wrapperFeatures.gtk = true; # Fixes common issues with GTK 3 apps
     config = {
