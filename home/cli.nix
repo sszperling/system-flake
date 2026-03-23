@@ -12,11 +12,14 @@
     jq
     nerd-fonts.hack
     tree
-  ] ++ lib.optionals pkgs.stdenv.hostPlatform.isLinux [
-    foot # only provided for linux
   ] ++ lib.optionals pkgs.stdenv.hostPlatform.isMacOS [
     iterm2
   ];
+
+  programs.foot = {
+    enable = pkgs.stdenv.hostPlatform.isLinux;
+    settings.main.dpi-aware = "yes";
+  };
 
   programs.zsh = {
     enable = true;
