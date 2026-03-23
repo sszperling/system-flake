@@ -2,6 +2,8 @@
 
 {
   home.packages = with pkgs; [
+    kotlin
+    rustc
     vscodium
   ] ++ lib.optionals pkgs.stdenv.hostPlatform.isLinux [
     android-studio # only provided for linux
