@@ -6,13 +6,16 @@ lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
     grim
     imv
     libnotify
-    nautilus
+    lxmenu-data
     networkmanagerapplet
+    pcmanfm
     seahorse
+    shared-mime-info
     slurp
     swaybg
     wl-clipboard
     xdg-user-dirs
+    zathura
   ];
 
   catppuccin.cursors = {
