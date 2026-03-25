@@ -26,7 +26,7 @@ lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
   programs.waybar = {
     enable = true;
     settings = [{
-      spacing = 0;
+      spacing = 10;
       modules-left = [
         "sway/workspaces"
         "sway/mode"
@@ -104,6 +104,11 @@ lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
         };
       };
     }];
+    style = ''
+      * {
+        font-family: sans-serif, 'Font Awesome 7 Free';
+      }
+    '';
   };
 
   programs.rofi.enable = true;
