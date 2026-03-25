@@ -2,7 +2,6 @@
 
 lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
   home.packages = with pkgs; [
-    brightnessctl
     font-awesome
     grim
     imv
@@ -109,6 +108,7 @@ lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
 
   programs.rofi.enable = true;
   programs.swaylock.enable = true;
+  services.swayosd.enable = true;
 
   services = {
     blueman-applet.enable = true;
@@ -169,13 +169,14 @@ lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
         "Control+Print" = "exec --no-startup-id grim - | wl-copy";
         "Control+Shift+Print" = "exec --no-startup-id grim -g \"$(slurp)\" - | wl-copy";
         # Brightness Controls
-        XF86MonBrightnessDown = "exec brightnessctl set 10%-";
-        XF86MonBrightnessUp = "exec brightnessctl set 10%+";
+        XF86MonBrightnessDown = "exec swayosd-client --brightness -10";
+        XF86MonBrightnessUp = "exec swayosd-client --brightness +10";
         # Volume Controls
-        XF86AudioRaiseVolume = "exec wpctl set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 5%+";
-        XF86AudioLowerVolume = "exec wpctl set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 5%-";
-        XF86AudioMute = "exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
-        XF86AudioMicMute = "exec wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle";
+        XF86AudioRaiseVolume = "exec swayosd-client --output-volume raise";
+        XF86AudioLowerVolume = "exec swayosd-client --output-volume lower";
+        XF86AudioMute = "exec swayosd-client --output-volume mute-toggle";
+        XF86AudioMicMute = "exec swayosd-client --input-volume mute-toggle";
+        "--release Caps_Lock" = "exec swayosd-client --caps-lock";
       };
     };
   };
