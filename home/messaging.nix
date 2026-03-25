@@ -3,6 +3,7 @@
 {
   home.packages = with pkgs; [
     discord
+    signal-desktop
   ] ++ lib.optionals pkgs.stdenv.hostPlatform.isLinux [
     element-desktop # does not build on mac
     telegram-desktop # use mac specific version instead
