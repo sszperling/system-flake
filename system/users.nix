@@ -1,4 +1,4 @@
-{ pkgs, username, homedir, ... }:
+{ pkgs, username, homedir, catppuccin, ... }:
 
 {
   users.users.${username} = {
@@ -8,7 +8,12 @@
     shell = pkgs.zsh;
   };
 
-  home-manager.users.${username} = ../home;
+  home-manager.users.${username} = {
+    imports = [
+      ../home
+      catppuccin.homeModules.catppuccin
+    ];
+  };
   home-manager.extraSpecialArgs = { inherit username homedir; };
 
   programs.zsh.enable = true;

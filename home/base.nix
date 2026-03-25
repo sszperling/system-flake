@@ -5,4 +5,10 @@
   home.homeDirectory = homedir;
   home.stateVersion = "25.11";
   programs.home-manager.enable = true;
+
+  catppuccin = {
+    enable = true;
+    flavor = "mocha";
+    accent = "sapphire";
+  };
 }

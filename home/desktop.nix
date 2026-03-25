@@ -9,7 +9,6 @@ lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
     libnotify
     nautilus
     networkmanagerapplet
-    rofi
     seahorse
     slurp
     swaybg
@@ -17,10 +16,11 @@ lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
     xdg-user-dirs
   ];
 
+  catppuccin.cursors = {
+    enable = true;
+    accent = "sapphire";
+  };
   home.pointerCursor = {
-    name = "Adwaita";
-    package = pkgs.adwaita-icon-theme;
-    size = 24;
     sway.enable = true;
   };
 
@@ -107,6 +107,7 @@ lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
     }];
   };
 
+  programs.rofi.enable = true;
   programs.swaylock.enable = true;
 
   services = {

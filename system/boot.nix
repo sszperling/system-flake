@@ -1,18 +1,16 @@
 { pkgs, ... }:
 
 {
+  catppuccin = {
+    enable = true;
+    flavor = "mocha";
+  };
   boot = {
     loader.systemd-boot.enable = true;
     loader.efi.canTouchEfiVariables = true;
     kernelPackages = pkgs.linuxPackages_latest;
 
-    plymouth = {
-      enable = true;
-      theme = "catppuccin-mocha";
-      themePackages = with pkgs; [
-        (catppuccin-plymouth.override { variant = "mocha"; })
-      ];
-    };
+    plymouth.enable = true;
 
     # Enable "Silent boot"
     consoleLogLevel = 3;

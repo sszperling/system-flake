@@ -7,6 +7,10 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    catppuccin = {
+      url = "github:catppuccin/nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     fingerprint = {
       url = "github:elvetemedve/nixos-06cb-009a-fingerprint-sensor?ref=make-compatible-with-nixos-unstable-and-upgrade";
@@ -14,7 +18,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }@inputs: {
+  outputs = { self, nixpkgs, home-manager, catppuccin, ... }@inputs: {
     nixosConfigurations.nixpad =
       let
         username = "sapph";
@@ -23,11 +27,12 @@
         modules = with inputs; [
           ./hardware
           ./system
+          catppuccin.nixosModules.catppuccin
           nixos-hardware.nixosModules.lenovo-thinkpad-x280
           fingerprint.nixosModules."06cb-009a-fingerprint-sensor"
           home-manager.nixosModules.home-manager
         ];
-        specialArgs = { inherit username homedir; };
+        specialArgs = { inherit username homedir catppuccin; };
       };
 
     homeConfigurations.safiros =
@@ -39,7 +44,10 @@
           config = { allowUnfree = true; };
           system = "aarch64-darwin";
         };
-        modules = [ ./home ];
+        modules = with inputs; [
+          ./home
+          catppuccin.homeModules.catppuccin
+        ];
         extraSpecialArgs = { inherit username homedir; };
       };
     #defaultPackage.aarch64-darwin = self.homeConfigurations.safiros.activationPackage;
