@@ -4,32 +4,34 @@
   fonts.fontconfig.enable = true;
 
   home.packages = with pkgs; [
-    bat
     fastfetch
     git-crypt
     htop
     httpie
     jq
     nerd-fonts.hack
-    tree
-  ] ++ lib.optionals pkgs.stdenv.hostPlatform.isMacOS [
-    iterm2
   ];
 
-  programs.foot = {
-    enable = pkgs.stdenv.hostPlatform.isLinux;
-    settings.main.dpi-aware = "yes";
+  programs.bat.enable = true;
+  programs.broot.enable = true;
+  programs.eza.enable = true;
+
+  programs.delta = {
+    enable = true;
+    enableGitIntegration = true;
   };
 
+  programs.ghostty = {
+    enable = true;
+    package = lib.mkIf pkgs.stdenv.hostPlatform.isMacOS pkgs.ghostty-bin;
+  };
+
+  home.shell.enableZshIntegration = true;
   programs.zsh = {
     enable = true;
     enableCompletion = true;
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
-
-    shellAliases = {
-      ll = "ls -l";
-    };
 
     oh-my-zsh = {
       enable = true;

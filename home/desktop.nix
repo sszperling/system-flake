@@ -114,14 +114,17 @@ lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
     '';
   };
 
-  programs.rofi.enable = true;
+  programs.vicinae = {
+    enable = true;
+    systemd.enable = true;
+  };
   programs.swaylock.enable = true;
   services.swayosd.enable = true;
 
   services = {
     blueman-applet.enable = true;
     network-manager-applet.enable = true;
-    mako.enable = true;
+    swaync.enable = true;
 
     swayidle = {
       enable = true;
@@ -146,7 +149,7 @@ lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
     wrapperFeatures.gtk = true; # Fixes common issues with GTK 3 apps
     config = {
       modifier = ModKey;
-      terminal = "foot";
+      terminal = "ghostty";
       input = {
         "*".xkb_layout = "se";
         "type:touchpad" = {
@@ -163,14 +166,14 @@ lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
       bars = [{
         command = "${pkgs.waybar}/bin/waybar";
       }];
-      menu = "rofi -show drun";
+      menu = "vicinae open";
       focus.followMouse = false;
       window = {
         titlebar = false;
         hideEdgeBorders = "smart_no_gaps";
       };
       keybindings = lib.mkOptionDefault {
-        "${ModKey}+Tab" = "exec --no-startup-id rofi -show window";
+        #"${ModKey}+Tab" = "exec --no-startup-id rofi -show window";
         # Print screen
         Print = "exec --no-startup-id grim \"$(xdg-user-dir PICTURES)/Screenshots/$(date +%Y-%m-%d_%H-%M-%S).png\"";
         "Shift+Print" = "exec --no-startup-id grim -g \"$(slurp)\" \"$(xdg-user-dir PICTURES)/Screenshots/$(date +%Y-%m-%d_%H-%M-%S).png\"";
