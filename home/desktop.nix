@@ -29,7 +29,6 @@ lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
   programs.waybar = {
     enable = true;
     settings = [{
-      spacing = 10;
       modules-left = [
         "sway/workspaces"
         "sway/mode"
@@ -46,32 +45,42 @@ lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
         "custom/power"
       ];
       tray.spacing = 10;
-      
+
+      "sway/workspaces" = {
+         disable-scroll = true;
+         sort-by-name = true;
+         format = " {icon} ";
+         format-icons = {
+            default = "";
+         };
+      };
+
       battery = {
         states = {
           warning = 30;
           critical = 15;
         };
-        format = "{capacity}% {icon}";
-        format-full = "{capacity}% {icon}";
-        format-charging = "{capacity}% ";
-        format-plugged = "{capacity}% ";
-        format-alt = "{time} {icon}";
+        format = "{icon} {capacity}%";
+        format-full = "{icon} {capacity}%";
+        format-charging = " {capacity}%";
+        format-plugged = " {capacity}%";
+        format-alt = "{icon} {time}";
         format-icons = ["" "" "" "" ""];
       };
 
       clock = {
-        tooltip-format = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
-        format-alt = "{:%Y-%m-%d}";
+        format = " {:%H:%M}";
+        format-alt = " {:%d/%m/%Y}";
+        tooltip-format = "<tt>{calendar}</tt>";
       };
 
       pulseaudio = {
         scroll-step = 5;
-        format = "{volume}% {icon} {format_source}";
-        format-bluetooth = "{volume}% {icon} {format_source}";
-        format-bluetooth-muted = " {icon} {format_source}";
+        format = "{icon} {volume}% {format_source}";
+        format-bluetooth = "{icon} {volume}% {format_source}";
+        format-bluetooth-muted = "{icon}  {format_source}";
         format-muted = " {format_source}";
-        format-source = "{volume}% ";
+        format-source = " {volume}%";
         format-source-muted = "";
         format-icons = {
           headphone = "";
@@ -80,22 +89,22 @@ lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
           phone = "";
           portable = "";
           car = "";
-          default = ["" "" ""];
+          default = ["" "" "" ""];
         };
         on-click = "${pkgs.pwvucontrol}/bin/pwvucontrol";
       };
 
       network = {
-        format-wifi = "{signalStrength}% ";
-        format-ethernet = "{ipaddr}/{cidr} ";
-        tooltip-format = "{ifname} via {gwaddr} ";
-        format-linked = "{ifname} (No IP) ";
-        format-disconnected = "Disconnected ⚠";
+        format-wifi = " {signalStrength}%";
+        format-ethernet = " {ipaddr}/{cidr}";
+        tooltip-format = " {ifname} via {gwaddr}";
+        format-linked = " {ifname} (No IP)";
+        format-disconnected = "⚠ Disconnected";
         format-alt = "{ifname}: {ipaddr}/{cidr}";
       };
 
       "custom/power" = {
-        format  = "⏻ ";
+        format  = "⏻";
         tooltip = false;
         menu = "on-click";
         menu-file = ./waybar-power-menu.xml;
@@ -107,11 +116,7 @@ lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
         };
       };
     }];
-    style = ''
-      * {
-        font-family: sans-serif, 'Font Awesome 7 Free';
-      }
-    '';
+    style = builtins.readFile ./waybar/style.css;
   };
 
   programs.vicinae = {
@@ -120,6 +125,8 @@ lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
   };
   programs.swaylock.enable = true;
   services.swayosd.enable = true;
+  dbus.packages = [ pkgs.swayosd ];
+  systemd.user.packages = [ pkgs.swayosd ];
 
   services = {
     blueman-applet.enable = true;
@@ -162,6 +169,9 @@ lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
         "*" = {
           bg = "${./wallpaper.png} fill";
         };
+        DP-2 = {
+          scale = "1.5";
+        };
       };
       bars = [{
         command = "${pkgs.waybar}/bin/waybar";
@@ -187,7 +197,7 @@ lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
         XF86AudioLowerVolume = "exec swayosd-client --output-volume lower";
         XF86AudioMute = "exec swayosd-client --output-volume mute-toggle";
         XF86AudioMicMute = "exec swayosd-client --input-volume mute-toggle";
-        "--release Caps_Lock" = "exec swayosd-client --caps-lock";
+        #"--release Caps_Lock" = "exec swayosd-client --caps-lock";
       };
     };
   };
@@ -196,10 +206,27 @@ lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
     nm-applet = {
       Unit = {
         Description = "NetworkManager applet in tray";
+        PartOf = "sway-session.target";
         After = "sway-session.target";
       };
       Service = {
         ExecStart = "${pkgs.networkmanagerapplet}/bin/nm-applet";
+        Restart = "on-failure";
+      };
+    };
+    swayosd-libinput-backend = {
+      Unit = {
+        Description = "SwayOSD LibInput backend for listening to certain keys like CapsLock, ScrollLock, VolumeUp, etc.";
+        Documentation = [ "https://github.com/ErikReider/SwayOSD" ];
+        PartOf = "sway-session.target";
+        After = "sway-session.target";
+      };
+
+      Service = {
+        Type = "dbus";
+        BusName = "org.erikreider.swayosd";
+        ExecStart = "${pkgs.swayosd}/bin/swayosd-libinput-backend";
+        Restart = "on-failure";
       };
     };
   };
