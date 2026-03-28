@@ -38,21 +38,34 @@
   color: @pink;
 }
 
-.modules-right .module {
+.modules-right > widget > * {
+  border-radius: 1rem;
+  padding: 0.5rem 1rem;
   background-color: @surface0;
 }
 
-#clock {
-  color: @blue;
-  border-radius: 0 1rem 1rem 0;
-  padding: 0.5rem 1rem 0.5rem 0.5rem;
+.modules-right > widget:not(:last-child) > * {
+  margin-right: 0.5rem;
 }
 
-#battery {
-  color: @green;
+#hardware {
+  border-radius: 1rem;
+  padding: 0.5rem;
 }
 
-#battery.charging {
+#hardware .module {
+  padding: 0 0.5rem;
+}
+
+#pulseaudio {
+  color: @maroon;
+}
+
+#network {
+  color: @yellow;
+}
+
+#battery, #battery.charging {
   color: @green;
 }
 
@@ -60,36 +73,14 @@
   color: @red;
 }
 
-#network {
-  color: @yellow;
-}
-
-#network,
-#battery {
-  padding: 0.5rem;
-}
-
-#pulseaudio {
-  color: @maroon;
-  border-radius: 1rem 0 0 1rem;
-  padding: 0.5rem 0.5rem 0.5rem 1rem;
+#clock {
+  color: @blue;
 }
 
 #custom-notifcenter {
-  border-radius: 1rem;
   color: @yellow;
-  padding: 0.5rem 1rem;
-  margin-right: 0.5rem;
 }
 
 #custom-power {
-  border-radius: 1rem;
   color: @red;
-  padding: 0.5rem 1rem;
-}
-
-#tray {
-  border-radius: 1rem;
-  margin: 0 0.5rem 0;
-  padding: 0.5rem 1rem;
 }

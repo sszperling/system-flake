@@ -15,11 +15,8 @@
       modules-center = [
         "sway/window"
       ];
-      modules-right = [
-        "pulseaudio"
-        "network"
-        "battery"
-        "clock"
+      modules-right = [ 
+        "group/hardware"
         "tray"
         "custom/notifcenter"
         "custom/power"
@@ -33,6 +30,16 @@
          format-icons = {
             default = "";
          };
+      };
+
+      "group/hardware" = {
+        orientation = "inherit";
+        modules = [
+          "pulseaudio"
+          "network"
+          "battery"
+          "clock"
+        ];
       };
 
       battery = {
