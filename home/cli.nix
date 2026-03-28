@@ -35,6 +35,7 @@
       enableCompletion = true;
       autosuggestion.enable = true;
       syntaxHighlighting.enable = true;
+      dotDir = "${config.xdg.configHome}/zsh"; # 26.05
 
       oh-my-zsh = {
         enable = true;

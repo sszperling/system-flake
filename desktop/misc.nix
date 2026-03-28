@@ -13,6 +13,7 @@
   xdg = {
     enable = true;
     userDirs.enable = true;
+    userDirs.setSessionVariables = false; # 26.05
   };
 
   catppuccin.cursors = {
