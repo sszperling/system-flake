@@ -1,6 +1,6 @@
 { lib, pkgs, username, homedir, ... }:
 
-lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
+{
   home.packages = with pkgs; [
     font-awesome
     grim
@@ -14,9 +14,10 @@ lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
     slurp
     swaybg
     wl-clipboard
-    xdg-user-dirs
     zathura
   ];
+
+  xdg.userDirs.enable = true;
 
   catppuccin.cursors = {
     enable = true;
@@ -107,7 +108,7 @@ lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
         format  = "⏻";
         tooltip = false;
         menu = "on-click";
-        menu-file = ./waybar-power-menu.xml;
+        menu-file = ./waybar/power-menu.xml;
         menu-actions = {
           shutdown = "shutdown";
           reboot = "reboot";
@@ -173,7 +174,7 @@ lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
         "*" = {
           bg = "${./wallpaper.png} fill";
         };
-        DP-2 = {
+        DP-1 = {
           scale = "1.5";
         };
       };

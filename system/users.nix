@@ -11,6 +11,7 @@
   home-manager.users.${username} = {
     imports = [
       ../home
+      ../desktop
       catppuccin.homeModules.catppuccin
     ];
   };
