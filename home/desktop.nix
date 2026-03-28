@@ -187,7 +187,6 @@ lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
         hideEdgeBorders = "smart_no_gaps";
       };
       keybindings = lib.mkOptionDefault {
-        #"${ModKey}+Tab" = "exec --no-startup-id rofi -show window";
         # Print screen
         Print = "exec --no-startup-id grim \"$(xdg-user-dir PICTURES)/Screenshots/$(date +%Y-%m-%d_%H-%M-%S).png\"";
         "Shift+Print" = "exec --no-startup-id grim -g \"$(slurp)\" \"$(xdg-user-dir PICTURES)/Screenshots/$(date +%Y-%m-%d_%H-%M-%S).png\"";
@@ -202,35 +201,6 @@ lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
         XF86AudioMute = "exec swayosd-client --output-volume mute-toggle";
         XF86AudioMicMute = "exec swayosd-client --input-volume mute-toggle";
         #"--release Caps_Lock" = "exec swayosd-client --caps-lock";
-      };
-    };
-  };
-
-  systemd.user.services = {
-    nm-applet = {
-      Unit = {
-        Description = "NetworkManager applet in tray";
-        PartOf = "sway-session.target";
-        After = "sway-session.target";
-      };
-      Service = {
-        ExecStart = "${pkgs.networkmanagerapplet}/bin/nm-applet";
-        Restart = "on-failure";
-      };
-    };
-    swayosd-libinput-backend = {
-      Unit = {
-        Description = "SwayOSD LibInput backend for listening to certain keys like CapsLock, ScrollLock, VolumeUp, etc.";
-        Documentation = [ "https://github.com/ErikReider/SwayOSD" ];
-        PartOf = "sway-session.target";
-        After = "sway-session.target";
-      };
-
-      Service = {
-        Type = "dbus";
-        BusName = "org.erikreider.swayosd";
-        ExecStart = "${pkgs.swayosd}/bin/swayosd-libinput-backend";
-        Restart = "on-failure";
       };
     };
   };
