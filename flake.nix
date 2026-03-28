@@ -50,7 +50,6 @@
         ];
         extraSpecialArgs = { inherit username homedir; };
       };
-    #defaultPackage.aarch64-darwin = self.homeConfigurations.safiros.activationPackage;
   };
 }
 
