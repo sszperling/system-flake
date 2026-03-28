@@ -13,5 +13,14 @@
   programs.vscode = {
     enable = true;
     package = pkgs.vscodium;
+    profiles.default = {
+      userSettings = {
+        "git.autofetch" = true;
+        "editor.renderWhitespace" = "all";
+        "git.allowForcePush" = true;
+        "terminal.integrated.initialHint" = false;
+        "editor.fontFamily" = "'Hack Nerd Font Mono','Font Awesome 7  Free','Droid Sans Mono', monospace";
+      };
+    };
   };
 }
