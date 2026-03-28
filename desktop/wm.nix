@@ -1,11 +1,12 @@
 { lib, pkgs, username, homedir, ... }:
 
 {
-  home.packages = with pkgs; [
-    swaybg
-  ];
-
-  home.pointerCursor.sway.enable = true;
+  home = {
+    packages = with pkgs; [
+      swaybg
+    ];
+    pointerCursor.sway.enable = true;
+  };
 
   wayland.windowManager.sway = {
     enable = true;

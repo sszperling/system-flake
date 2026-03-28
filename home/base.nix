@@ -1,9 +1,12 @@
 { pkgs, username, homedir, ... }:
 
 {
-  home.username = username;
-  home.homeDirectory = homedir;
-  home.stateVersion = "25.11";
+  home = {
+    inherit username;
+    homeDirectory = homedir;
+    stateVersion = "25.11";
+  };
+
   programs.home-manager.enable = true;
 
   catppuccin = {

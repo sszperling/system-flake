@@ -3,63 +3,67 @@
 {
   fonts.fontconfig.enable = true;
 
-  home.packages = with pkgs; [
-    fastfetch
-    git-crypt
-    htop
-    httpie
-    jq
-    nerd-fonts.hack
-  ];
-
-  programs.bat.enable = true;
-  programs.broot.enable = true;
-  programs.eza.enable = true;
-
-  programs.delta = {
-    enable = true;
-    enableGitIntegration = true;
+  home = {
+    packages = with pkgs; [
+      git-crypt
+      htop
+      httpie
+      jq
+      nerd-fonts.hack
+    ];
+   shell.enableZshIntegration = true;
   };
 
-  programs.ghostty = {
-    enable = true;
-    package = lib.mkIf pkgs.stdenv.hostPlatform.isMacOS pkgs.ghostty-bin;
-  };
+  programs = {
+    fastfetch.enable = true;
+    bat.enable = true;
+    broot.enable = true;
+    eza.enable = true;
 
-  home.shell.enableZshIntegration = true;
-  programs.zsh = {
-    enable = true;
-    enableCompletion = true;
-    autosuggestion.enable = true;
-    syntaxHighlighting.enable = true;
-
-    oh-my-zsh = {
+    delta = {
       enable = true;
-      theme = "agnoster";
-      extraConfig = "export DEFAULT_USER=${config.home.username}";
+      enableGitIntegration = true;
     };
-  };
 
-  programs.git = {
-    enable = true;
-    settings = {
-      user = {
-        name  = "Safiro Szperling";
-        email = "zebaszp@gmail.com";
-      };
-      init.defaultBranch = "main";
-      alias = {
-        co = "checkout";
-        st = "status";
+    ghostty = {
+      enable = true;
+      package = lib.mkIf pkgs.stdenv.hostPlatform.isMacOS pkgs.ghostty-bin;
+    };
+
+    zsh = {
+      enable = true;
+      enableCompletion = true;
+      autosuggestion.enable = true;
+      syntaxHighlighting.enable = true;
+
+      oh-my-zsh = {
+        enable = true;
+        theme = "agnoster";
+        extraConfig = "export DEFAULT_USER=${config.home.username}";
       };
     };
-  };
 
-  programs.neovim = {
-    enable = true;
-    defaultEditor = true;
-    vimAlias = true;
-    vimdiffAlias = true;
+    git = {
+      enable = true;
+      settings = {
+        user = {
+          name  = "Safiro Szperling";
+          email = "zebaszp@gmail.com";
+        };
+        init.defaultBranch = "main";
+        alias = {
+          co = "checkout";
+          st = "status";
+        };
+      };
+    };
+
+    neovim = {
+      enable = true;
+      defaultEditor = true;
+      vimAlias = true;
+      vimdiffAlias = true;
+    };
   };
 
   services.gpg-agent = {
