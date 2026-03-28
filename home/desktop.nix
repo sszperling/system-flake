@@ -123,6 +123,10 @@ lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
     enable = true;
     systemd.enable = true;
   };
+  systemd.user.services.vicinae.Service.Environment = [
+    "PATH=/etc/profiles/per-user/${username}/bin"
+  ];
+
   programs.swaylock.enable = true;
   services.swayosd.enable = true;
   dbus.packages = [ pkgs.swayosd ];
