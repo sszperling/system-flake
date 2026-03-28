@@ -2,6 +2,7 @@
 
 {
   home.packages = with pkgs; [
+    blueman
     libnotify
     lxmenu-data
     networkmanagerapplet
