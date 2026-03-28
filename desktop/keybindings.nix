@@ -1,8 +1,6 @@
 { lib, pkgs, ... }:
 
 {
-  xdg.userDirs.enable = true;
-
   catppuccin.cursors = {
     enable = true;
     accent = "sapphire";

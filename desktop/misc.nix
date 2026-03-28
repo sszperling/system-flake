@@ -4,6 +4,7 @@
   home.packages = with pkgs; [
     libnotify
     lxmenu-data
+    networkmanagerapplet
     seahorse
     shared-mime-info
   ];

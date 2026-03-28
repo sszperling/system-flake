@@ -21,6 +21,7 @@
         "battery"
         "clock"
         "tray"
+        "custom/notifcenter"
         "custom/power"
       ];
       tray.spacing = 10;
@@ -80,6 +81,26 @@
         format-linked = " {ifname} (No IP)";
         format-disconnected = "⚠ Disconnected";
         format-alt = "{ifname}: {ipaddr}/{cidr}";
+      };
+
+      "custom/notifcenter" = {
+        tooltip = true;
+        format = "{icon}";
+        format-icons = {
+          notification = "󱅫";
+          none = "󰂜";
+          dnd-notification = "󰂠";
+          dnd-none = "󰪓";
+          inhibited-notification = "󰂛";
+          inhibited-none = "󰪑";
+          dnd-inhibited-notification = "󰂛";
+          dnd-inhibited-none = "󰪑";
+        };
+        return-type = "json";
+        exec = "${pkgs.swaynotificationcenter}/bin/swaync-client -swb";
+        on-click = "${pkgs.swaynotificationcenter}/bin/swaync-client -t -sw";
+        on-click-right = "${pkgs.swaynotificationcenter}/bin/swaync-client -d -sw";
+        escape = true;
       };
 
       "custom/power" = {
