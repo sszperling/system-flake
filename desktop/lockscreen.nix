@@ -3,22 +3,25 @@
 {
   programs.hyprlock.enable = true;
 
-  services.swayidle = {
+  services.hypridle = {
     enable = true;
-    events = {
-      after-resume = "${pkgs.sway}/bin/swaymsg 'output * power on'";
-      before-sleep = "${pkgs.hyprlock}/bin/hyprlock";
+    settings = {
+        general = {
+        after_sleep_cmd = "${pkgs.sway}/bin/swaymsg 'output * power on'";
+        lock_cmd = "${pkgs.hyprlock}/bin/hyprlock";
+      };
+
+      listener = [
+        {
+          timeout = 300;
+          on-timeout = "${pkgs.sway}/bin/swaymsg 'output * power off' && ${pkgs.hyprlock}/bin/hyprlock";
+          on-resume = "${pkgs.sway}/bin/swaymsg 'output * power on'";
+        }
+        {
+          timeout = 600;
+          on-timeout = "${pkgs.systemd}/bin/systemctl suspend";
+        }
+      ];
     };
-    timeouts = [
-      {
-        timeout = 300;
-        command = "${pkgs.sway}/bin/swaymsg 'output * power off' && ${pkgs.hyprlock}/bin/hyprlock";
-        resumeCommand = "${pkgs.sway}/bin/swaymsg 'output * power on'";
-      }
-      {
-        timeout = 600;
-        command = "${pkgs.systemd}/bin/systemctl suspend";
-      }
-    ];
   };
 }
