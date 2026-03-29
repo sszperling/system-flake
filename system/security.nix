@@ -21,7 +21,9 @@
         enable = true;
         control = "sufficient";
       };
-      services.swaylock = {};
+      services = {
+        hyprlock = {};
+      };
     };
   };
 }

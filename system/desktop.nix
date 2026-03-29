@@ -13,6 +13,6 @@
 
   security.pam.services = {
     greetd.enableGnomeKeyring = true;
-    swaylock.enableGnomeKeyring = true;
+    hyprlock.enableGnomeKeyring = true;
   };
 }
