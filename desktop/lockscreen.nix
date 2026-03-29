@@ -34,7 +34,7 @@
         }
         {
           monitor = "";
-          text = "cmd[update:43200000] date +'%A, %d %B %Y'";
+          text = "cmd[update:43200000] ${pkgs.coreutils-full}/bin/date +'%A, %d %B %Y'";
           color = "$text";
           font_size = 25;
           font_family = "$font";
@@ -93,14 +93,19 @@
     enable = true;
     settings = {
         general = {
+        before_sleep_cmd = "${pkgs.systemd}/bin/loginctl lock-session";
         after_sleep_cmd = "${pkgs.sway}/bin/swaymsg 'output * power on'";
-        lock_cmd = "${pkgs.hyprlock}/bin/hyprlock";
+        lock_cmd = "${pkgs.procps}/bin/pidof hyprlock || ${pkgs.hyprlock}/bin/hyprlock";
       };
 
       listener = [
         {
           timeout = 300;
-          on-timeout = "${pkgs.sway}/bin/swaymsg 'output * power off' && ${pkgs.hyprlock}/bin/hyprlock";
+          on-timeout = "${pkgs.systemd}/bin/loginctl lock-session";
+        }
+        {
+          timeout = 330;
+          on-timeout = "${pkgs.sway}/bin/swaymsg 'output * power off'";
           on-resume = "${pkgs.sway}/bin/swaymsg 'output * power on'";
         }
         {
