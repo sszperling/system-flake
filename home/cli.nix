@@ -5,6 +5,7 @@
 
   home = {
     packages = with pkgs; [
+      file
       git-crypt
       htop
       httpie
@@ -15,6 +16,7 @@
   };
 
   programs = {
+    atuin.enable = true;
     fastfetch.enable = true;
     bat.enable = true;
     broot.enable = true;
