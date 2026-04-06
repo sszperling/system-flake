@@ -17,6 +17,7 @@
       extensions = with pkgs.vscode-extensions; [
         jnoortheen.nix-ide
       ];
+      enableUpdateCheck = false;
       userSettings = {
         "git.autofetch" = true;
         "editor.renderWhitespace" = "all";
