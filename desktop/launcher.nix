@@ -5,26 +5,11 @@
     ulauncher
   ];
 
-  systemd.user.services.ulauncher = {
-    Unit = {
-      Description = "Linux Application Launcher";
-      Documentation = "https://ulauncher.io/";
-    };
-    Service = {
-      Type = "simple";
-      Restart = "always";
-      RestartSec = 1;
-      ExecStart = "${pkgs.ulauncher}/bin/ulauncher --hide-window";
-      Environment = [
-        "PATH=/etc/profiles/per-user/${username}/bin"
-      ];
-    };
-    Install = {
-      WantedBy = ["graphical-session.target"];
-    };
-  };
-
   wayland.windowManager.sway.config = {
+    startup = [{
+      command = "${pkgs.ulauncher}/bin/ulauncher --hide-window";
+      always = true;
+    }];
     menu = "${pkgs.ulauncher}/bin/ulauncher-toggle";
     window.commands = [
       {
