@@ -22,6 +22,12 @@
     broot.enable = true;
     eza.enable = true;
 
+    direnv = {
+      enable = true;
+      enableZshIntegration = true;
+      nix-direnv.enable = true;
+    };
+
     delta = {
       enable = true;
       enableGitIntegration = true;
