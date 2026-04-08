@@ -44,12 +44,11 @@
       autosuggestion.enable = true;
       syntaxHighlighting.enable = true;
       dotDir = lib.mkIf pkgs.stdenv.hostPlatform.isLinux "${config.xdg.configHome}/zsh"; # 26.05
+    };
 
-      oh-my-zsh = {
-        enable = true;
-        theme = "agnoster";
-        extraConfig = "export DEFAULT_USER=${config.home.username}";
-      };
+    starship = {
+      enable = true;
+      presets = ["catppuccin-powerline"];
     };
 
     git = {
@@ -74,6 +73,9 @@
       vimdiffAlias = true;
     };
   };
+
+  # messes up with the preset
+  catppuccin.starship.enable = false;
 
   services.gpg-agent = {
     enable = true;
