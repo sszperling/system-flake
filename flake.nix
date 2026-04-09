@@ -21,18 +21,20 @@
   outputs = { self, nixpkgs, home-manager, catppuccin, ... }@inputs: {
     nixosConfigurations.nixpad =
       let
+        hostname = "nixpad";
         username = "sapph";
         homedir = "/home/${username}";
       in nixpkgs.lib.nixosSystem {
         modules = with inputs; [
-          ./hardware
-          ./system
+          ./hardware/thinkpad
+          ./system/base
+          ./system/desktop
           catppuccin.nixosModules.catppuccin
           nixos-hardware.nixosModules.lenovo-thinkpad-x280
           fingerprint.nixosModules."06cb-009a-fingerprint-sensor"
           home-manager.nixosModules.home-manager
         ];
-        specialArgs = { inherit username homedir catppuccin; };
+        specialArgs = { inherit hostname username homedir catppuccin; };
       };
 
     homeConfigurations.safiros =
@@ -45,7 +47,8 @@
           system = "aarch64-darwin";
         };
         modules = with inputs; [
-          ./home
+          ./home/base
+          ./home/desktop
           catppuccin.homeModules.catppuccin
         ];
         extraSpecialArgs = { inherit username homedir; };

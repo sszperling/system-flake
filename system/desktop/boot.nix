@@ -6,10 +6,6 @@
     flavor = "mocha";
   };
   boot = {
-    loader.systemd-boot.enable = true;
-    loader.efi.canTouchEfiVariables = true;
-    kernelPackages = pkgs.linuxPackages_latest;
-
     plymouth.enable = true;
 
     # Enable "Silent boot"

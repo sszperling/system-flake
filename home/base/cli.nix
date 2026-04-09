@@ -1,8 +1,6 @@
 { config, pkgs, lib, ... }:
 
 {
-  fonts.fontconfig.enable = true;
-
   home = {
     packages = with pkgs; [
       file
@@ -10,7 +8,6 @@
       htop
       httpie
       jq
-      nerd-fonts.hack
     ];
    shell.enableZshIntegration = true;
   };
@@ -26,16 +23,6 @@
       enable = true;
       enableZshIntegration = true;
       nix-direnv.enable = true;
-    };
-
-    delta = {
-      enable = true;
-      enableGitIntegration = true;
-    };
-
-    ghostty = {
-      enable = true;
-      package = lib.mkIf pkgs.stdenv.hostPlatform.isMacOS pkgs.ghostty-bin;
     };
 
     zsh = {
@@ -78,10 +65,4 @@
 
   # messes up with the preset
   catppuccin.starship.enable = false;
-
-  services.gpg-agent = {
-    enable = true;
-    defaultCacheTtl = 1800;
-    enableSshSupport = true;
-  };
 }

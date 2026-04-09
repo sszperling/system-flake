@@ -1,4 +1,4 @@
-{ pkgs, username, homedir, ... }:
+{ username, homedir, ... }:
 
 {
   home = {
@@ -8,10 +8,4 @@
   };
 
   programs.home-manager.enable = true;
-
-  catppuccin = {
-    enable = true;
-    flavor = "mocha";
-    accent = "sapphire";
-  };
 }
