@@ -37,6 +37,21 @@
         specialArgs = { inherit hostname username homedir catppuccin; };
       };
 
+    nixosConfigurations.nixstar =
+      let
+        hostname = "nixstar";
+        username = "sapph";
+        homedir = "/home/${username}";
+      in nixpkgs.lib.nixosSystem {
+        modules = with inputs; [
+          #./hardware/nas
+          ./system/base
+          ./system/server
+          home-manager.nixosModules.home-manager
+        ];
+        specialArgs = { inherit hostname username homedir; };
+      };
+
     homeConfigurations.safiros =
       let
         username = "safiros";

@@ -2,12 +2,10 @@
 
 {
   imports = [
-    ./boot.nix
-    ./desktop.nix
+    ./containers.nix
     ./misc.nix
     ./networking.nix
     ./security.nix
-    ./sound.nix
     ./users.nix
   ];
 }
