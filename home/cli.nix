@@ -49,6 +49,7 @@
 
     starship = {
       enable = true;
+      settings.username.show_always = false;
       presets = ["catppuccin-powerline"];
     };
 
