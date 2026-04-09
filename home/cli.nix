@@ -44,6 +44,7 @@
       autosuggestion.enable = true;
       syntaxHighlighting.enable = true;
       dotDir = lib.mkIf pkgs.stdenv.hostPlatform.isLinux "${config.xdg.configHome}/zsh"; # 26.05
+      defaultKeymap = "emacs";
     };
 
     starship = {
