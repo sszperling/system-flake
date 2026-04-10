@@ -60,6 +60,8 @@
       defaultEditor = true;
       vimAlias = true;
       vimdiffAlias = true;
+      withRuby = false; # 26.05
+      withPython3 = false; # 26.05
     };
   };
 
