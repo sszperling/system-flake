@@ -40,7 +40,45 @@
 
     starship = {
       enable = true;
-      settings.username.show_always = false;
+      settings = {
+        format = lib.concatStrings [
+          "[](red)$os"
+          "$username"
+          "$hostname"
+          "[](bg:peach fg:red)"
+          "$directory"
+          "[](bg:yellow fg:peach)"
+          "$git_branch"
+          "$git_status"
+          "[](fg:yellow bg:green)"
+          "$c"
+          "$rust"
+          "$golang"
+          "$nodejs"
+          "$php"
+          "$java"
+          "$kotlin"
+          "$haskell"
+          "$python"
+          "[](fg:green bg:sapphire)"
+          "$conda"
+          "[](fg:sapphire bg:lavender)"
+          "$time"
+          "[ ](fg:lavender)"
+          "$cmd_duration"
+          "$line_break"
+          "$character"
+        ];
+        username = {
+          show_always = false;
+          format = "[$user]($style)";
+        };
+        hostname = {
+          format = "[$ssh_symbol$hostname]($style)";
+          style = "bg:red fg:crust";
+          ssh_symbol = "🌐";
+        };
+      };
       presets = ["catppuccin-powerline"];
     };
 
