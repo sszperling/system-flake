@@ -44,12 +44,13 @@
         homedir = "/home/${username}";
       in nixpkgs.lib.nixosSystem {
         modules = with inputs; [
-          #./hardware/nas
+          ./hardware/nas
           ./system/base
           ./system/server
+          catppuccin.nixosModules.catppuccin
           home-manager.nixosModules.home-manager
         ];
-        specialArgs = { inherit hostname username homedir; };
+        specialArgs = { inherit hostname username homedir catppuccin; };
       };
 
     homeConfigurations.safiros =
