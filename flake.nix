@@ -16,6 +16,10 @@
       url = "github:elvetemedve/nixos-06cb-009a-fingerprint-sensor?ref=make-compatible-with-nixos-unstable-and-upgrade";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nix-index-database = {
+      url = "github:nix-community/nix-index-database";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { self, nixpkgs, home-manager, catppuccin, ... }@inputs: {
@@ -33,6 +37,8 @@
           nixos-hardware.nixosModules.lenovo-thinkpad-x280
           fingerprint.nixosModules."06cb-009a-fingerprint-sensor"
           home-manager.nixosModules.home-manager
+          nix-index-database.nixosModules.default
+          { programs.nix-index-database.comma.enable = true; }
         ];
         specialArgs = { inherit hostname username homedir catppuccin; };
       };
@@ -49,6 +55,8 @@
           ./system/server
           catppuccin.nixosModules.catppuccin
           home-manager.nixosModules.home-manager
+          nix-index-database.nixosModules.default
+          { programs.nix-index-database.comma.enable = true; }
         ];
         specialArgs = { inherit hostname username homedir catppuccin; };
       };
@@ -66,6 +74,8 @@
           ./home/base
           ./home/desktop
           catppuccin.homeModules.catppuccin
+          nix-index-database.homeModules.default
+          { programs.nix-index-database.comma.enable = true; }
         ];
         extraSpecialArgs = { inherit username homedir; };
       };
