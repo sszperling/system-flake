@@ -32,6 +32,10 @@
       syntaxHighlighting.enable = true;
       dotDir = lib.mkIf pkgs.stdenv.hostPlatform.isLinux "${config.xdg.configHome}/zsh"; # 26.05
       defaultKeymap = "emacs";
+      initContent = ''
+        source ${./zsh/completion.zsh}
+        source ${./zsh/key-bindings.zsh}
+      '';
     };
 
     starship = {
