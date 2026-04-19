@@ -20,9 +20,14 @@
       url = "github:nix-community/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    agenix = {
+      url = "github:ryantm/agenix";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
+    };
   };
 
-  outputs = { self, nixpkgs, home-manager, catppuccin, ... }@inputs: {
+  outputs = { self, nixpkgs, home-manager, catppuccin, agenix, ... }@inputs: {
     nixosConfigurations.nixpad =
       let
         hostname = "nixpad";
@@ -54,11 +59,12 @@
           ./system/base
           ./system/server
           catppuccin.nixosModules.catppuccin
+          agenix.nixosModules.default
           home-manager.nixosModules.home-manager
           nix-index-database.nixosModules.default
           { programs.nix-index-database.comma.enable = true; }
         ];
-        specialArgs = { inherit hostname username homedir catppuccin; };
+        specialArgs = { inherit hostname username homedir catppuccin agenix; };
       };
 
     homeConfigurations.safiros =
@@ -77,7 +83,7 @@
           nix-index-database.homeModules.default
           { programs.nix-index-database.comma.enable = true; }
         ];
-        extraSpecialArgs = { inherit username homedir; };
+        extraSpecialArgs = { inherit username homedir agenix; };
       };
   };
 }
