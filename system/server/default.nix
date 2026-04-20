@@ -2,7 +2,7 @@
 
 {
   imports = [
-    ./containers.nix
+    ./containers
     ./misc.nix
     ./networking.nix
     ./secrets
