@@ -4,12 +4,13 @@ let
   rootTarget = "docker-compose-root";
   libArgs = (args // { rootTarget = "${rootTarget}.target"; });
   containerLib = (import ./utils.nix libArgs);
-  containerArgs = libArgs // { inherit containerLib; };
+  containerArgs = args // { inherit containerLib; };
 in {
   imports = [
     (import ./crossroads.nix containerArgs)
     (import ./dozzle.nix containerArgs)
     (import ./freshrss.nix containerArgs)
+    (import ./gomon.nix containerArgs)
     (import ./ntfy.nix containerArgs)
   ];
 

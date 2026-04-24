@@ -53,6 +53,7 @@
         hostname = "nixstar";
         username = "sapph";
         homedir = "/home/${username}";
+        storageMount = "/mnt/hdd";
       in nixpkgs.lib.nixosSystem {
         modules = with inputs; [
           ./hardware/nas
@@ -64,7 +65,7 @@
           nix-index-database.nixosModules.default
           { programs.nix-index-database.comma.enable = true; }
         ];
-        specialArgs = { inherit hostname username homedir catppuccin agenix; };
+        specialArgs = { inherit hostname username homedir catppuccin agenix storageMount; };
       };
 
     homeConfigurations.safiros =
