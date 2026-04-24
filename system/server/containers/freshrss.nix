@@ -1,4 +1,4 @@
-{ pkgs, lib, username, homedir, config, rootTarget, ... }:
+{ pkgs, lib, username, homedir, config, rootTarget, containerLib, ... }:
 
 let
   uid = config.users.users."${username}".uid;
@@ -25,7 +25,7 @@ in {
     ports = [
       "${port}:${port}/tcp"
     ];
-    # log-driver = "journald";
+    log-driver = "journald";
     extraOptions = [
       "--cap-drop=NET_RAW"
       "--health-cmd=php -r \"readfile('http://localhost/i/');\" | grep -q 'jsonVars'"
@@ -52,18 +52,6 @@ in {
       partOf = [ rootTarget ];
       wantedBy = [ rootTarget ];
     };
-    "${networkService}" = {
-      path = [ pkgs.docker ];
-      serviceConfig = {
-        Type = "oneshot";
-        RemainAfterExit = true;
-        ExecStop = "docker network rm -f ${networkName}";
-      };
-      script = ''
-        docker network inspect ${networkName} || docker network create ${networkName}
-      '';
-      partOf = [ rootTarget ];
-      wantedBy = [ rootTarget ];
-    };
+    "${networkService}" = containerLib.mkService.network networkName;
   };
 }

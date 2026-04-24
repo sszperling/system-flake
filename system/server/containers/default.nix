@@ -2,9 +2,12 @@
 
 let
   rootTarget = "docker-compose-root";
-  containerArgs = (args // { rootTarget = "${rootTarget}.target"; });
+  libArgs = (args // { rootTarget = "${rootTarget}.target"; });
+  containerLib = (import ./utils.nix libArgs);
+  containerArgs = libArgs // { inherit containerLib; };
 in {
   imports = [
+    (import ./dozzle.nix containerArgs)
     (import ./freshrss.nix containerArgs)
   ];
 
