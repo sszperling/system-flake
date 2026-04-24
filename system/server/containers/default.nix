@@ -7,6 +7,7 @@ let
   containerArgs = libArgs // { inherit containerLib; };
 in {
   imports = [
+    (import ./crossroads.nix containerArgs)
     (import ./dozzle.nix containerArgs)
     (import ./freshrss.nix containerArgs)
     (import ./ntfy.nix containerArgs)

@@ -3,33 +3,35 @@
 let
   uid = config.users.users."${username}".uid;
   gid = config.users.groups."${username}".gid;
-  port = "9999";
-  containerName = "dozzle";
+  containerName = "crossroads";
   networkName = "${containerName}_default";
   dataDir = containerLib.mkDataDir containerName;
 in {
   virtualisation.oci-containers.containers."${containerName}" = {
-    image = "amir20/dozzle:latest";
+    image = "jc21/nginx-proxy-manager:latest";
     environment = {
-      "TZ" = "Europe/Stockholm";
-      "DOZZLE_ADDR" = ":${port}";
+      "PGID" = builtins.toString uid;
+      "PUID" = builtins.toString gid;
+      "TP_COMMUNITY_THEME" = "true";
+      "TP_THEME" = "catppuccin-mocha";
+      "TZ" = "\"Europe/Stockholm\"";
     };
     volumes = [
       "${dataDir}/data:/data:rw"
-      "/var/run/docker.sock:/var/run/docker.sock:rw"
+      "${dataDir}/letsencrypt:/etc/letsencrypt:rw"
+      "${dataDir}/theme-park/nginx-proxy-manager/98-themepark:/etc/cont-init.d/98-themepark:rw"
     ];
     ports = [
-      "${port}:${port}/tcp"
+      "80:80/tcp"
+      "81:81/tcp"
+      "443:443/tcp"
     ];
     log-driver = "journald";
     extraOptions = [
-      "--cap-drop=NET_RAW"
-      # broken docker stuff
-      # "--health-cmd=[\"/dozzle\", \"healthcheck\"]"
-      # "--health-interval=30s"
-      # "--health-retries=5"
-      # "--health-start-period=30s"
-      # "--health-timeout=30s"
+      "--health-cmd=/usr/bin/check-health"
+      "--health-interval=30s"
+      "--health-start-period=20s"
+      "--health-timeout=5s"
       "--network-alias=${containerName}"
       "--network=${networkName}"
       "--security-opt=no-new-privileges:true"

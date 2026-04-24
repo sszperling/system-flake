@@ -1,15 +1,14 @@
-{ lib, username, homedir, config, rootTarget, containerLib, ... }:
+{ username, config, containerLib, ... }:
 
 let
   uid = config.users.users."${username}".uid;
   gid = config.users.groups."${username}".gid;
   port = "8001";
-  containerService = "docker-freshrss";
-  networkName = "freshrss_default";
-  networkService = "docker-network-${networkName}";
+  containerName = "freshrss";
+  networkName = "${containerName}_default";
+  dataDir = containerLib.mkDataDir containerName;
 in {
-  # Containers
-  virtualisation.oci-containers.containers."freshrss" = {
+  virtualisation.oci-containers.containers."${containerName}" = {
     image = "freshrss/freshrss:latest";
     environment = {
       "CRON_MIN" = "3,33";
@@ -19,8 +18,8 @@ in {
       "LISTEN" = "0.0.0.0:${port}";
     };
     volumes = [
-      "${homedir}/containers/freshrss/data:/var/www/FreshRSS/data:rw"
-      "${homedir}/containers/freshrss/extensions:/var/www/FreshRSS/extensions:rw"
+      "${dataDir}/data:/var/www/FreshRSS/data:rw"
+      "${dataDir}/extensions:/var/www/FreshRSS/extensions:rw"
     ];
     ports = [
       "${port}:${port}/tcp"
@@ -33,24 +32,11 @@ in {
       "--health-retries=3"
       "--health-start-period=20s"
       "--health-timeout=5s"
-      "--network-alias=freshrss"
+      "--network-alias=${containerName}"
       "--network=${networkName}"
       "--security-opt=no-new-privileges:true"
     ];
   };
-  systemd.services = {
-    "${containerService}" = {
-      serviceConfig = {
-        Restart = lib.mkOverride 90 "always";
-        RestartMaxDelaySec = lib.mkOverride 90 "1m";
-        RestartSec = lib.mkOverride 90 "100ms";
-        RestartSteps = lib.mkOverride 90 9;
-      };
-      after = [ "${networkService}.service" ];
-      requires = [ "${networkService}.service" ];
-      partOf = [ rootTarget ];
-      wantedBy = [ rootTarget ];
-    };
-    "${networkService}" = containerLib.mkService.network networkName;
-  };
+
+  systemd.services = containerLib.mkService.default containerName;
 }
