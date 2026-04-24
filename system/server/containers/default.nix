@@ -4,7 +4,7 @@ let
   rootTarget = "docker-compose-root";
   libArgs = (args // { rootTarget = "${rootTarget}.target"; });
   containerLib = (import ./utils.nix libArgs);
-  containerArgs = args // { inherit containerLib; };
+  containerArgs = libArgs // { inherit containerLib; };
 in {
   imports = [
     (import ./crossroads.nix containerArgs)
@@ -12,6 +12,7 @@ in {
     (import ./freshrss.nix containerArgs)
     (import ./gomon.nix containerArgs)
     (import ./ntfy.nix containerArgs)
+    (import ./the-bay.nix containerArgs)
   ];
 
   virtualisation = {
