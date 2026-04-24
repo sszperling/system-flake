@@ -6,6 +6,9 @@
   age = {
     identityPaths = [ "${homedir}/.ssh/id_github" ];
     secrets = {
+      vpn = {
+        file = ./vpn.age;
+      };
     };
   };
 }
