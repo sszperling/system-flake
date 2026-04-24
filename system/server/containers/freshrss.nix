@@ -28,7 +28,7 @@ in {
     log-driver = "journald";
     extraOptions = [
       "--cap-drop=NET_RAW"
-      "--health-cmd=php -r \"readfile('http://localhost/i/');\" | grep -q 'jsonVars'"
+      "--health-cmd=php -r \"readfile('http://localhost:${port}/i/');\" | grep -q 'jsonVars'"
       "--health-interval=30s"
       "--health-retries=3"
       "--health-start-period=20s"
