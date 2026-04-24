@@ -3,41 +3,42 @@
 let
   uid = config.users.users."${username}".uid;
   gid = config.users.groups."${username}".gid;
-  port = "8001";
-  containerService = "docker-freshrss";
-  networkName = "freshrss_default";
+  port = "9998";
+  containerService = "docker-ntfy";
+  networkName = "ntfy_default";
   networkService = "docker-network-${networkName}";
 in {
   # Containers
-  virtualisation.oci-containers.containers."freshrss" = {
-    image = "freshrss/freshrss:latest";
+  virtualisation.oci-containers.containers."ntfy" = {
+    image = "binwiederhier/ntfy";
     environment = {
-      "CRON_MIN" = "3,33";
-      "PGID" = builtins.toString uid;
-      "PUID" = builtins.toString gid;
       "TZ" = "Europe/Stockholm";
-      "LISTEN" = "0.0.0.0:${port}";
+      "NTFY_BASE_URL" = "http://ntfy";
+      "NTFY_BEHIND_PROXY" = "true";
+      "NTFY_LISTEN_HTTP" = ":${port}";
+      "NTFY_UPSTREAM_BASE_URL" = "https://ntfy.sh"; # for iOS push notif support
     };
     volumes = [
-      "${homedir}/containers/freshrss/data:/var/www/FreshRSS/data:rw"
-      "${homedir}/containers/freshrss/extensions:/var/www/FreshRSS/extensions:rw"
+      "${homedir}/containers/ntfy/cache:/var/cache/ntfy:rw"
+      "${homedir}/containers/ntfy/etc:/etc/ntfy:rw"
     ];
     ports = [
       "${port}:${port}/tcp"
     ];
+    cmd = [ "serve" ];
+    user = "${builtins.toString uid}:${builtins.toString gid}";
     log-driver = "journald";
     extraOptions = [
-      "--cap-drop=NET_RAW"
-      "--health-cmd=php -r \"readfile('http://localhost:${port}/i/');\" | grep -q 'jsonVars'"
-      "--health-interval=30s"
+      "--health-cmd=wget -q --tries=1 http://localhost:${port}/v1/health -O - | grep -Eo '\"healthy\"\\s*:\\s*true'"
+      "--health-interval=1m0s"
       "--health-retries=3"
-      "--health-start-period=20s"
-      "--health-timeout=5s"
-      "--network-alias=freshrss"
-      "--network=${networkName}"
-      "--security-opt=no-new-privileges:true"
+      "--health-start-period=40s"
+      "--health-timeout=10s"
+      "--network-alias=ntfy"
+      "--network=ntfy_default"
     ];
   };
+
   systemd.services = {
     "${containerService}" = {
       serviceConfig = {

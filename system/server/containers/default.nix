@@ -9,6 +9,7 @@ in {
   imports = [
     (import ./dozzle.nix containerArgs)
     (import ./freshrss.nix containerArgs)
+    (import ./ntfy.nix containerArgs)
   ];
 
   virtualisation = {

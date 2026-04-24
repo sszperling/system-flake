@@ -1,4 +1,4 @@
-{ pkgs, lib, username, homedir, config, rootTarget, containerLib, ... }:
+{ lib, username, homedir, config, rootTarget, containerLib, ... }:
 
 let
   uid = config.users.users."${username}".uid;
@@ -35,7 +35,6 @@ in {
       "--network=${networkName}"
       "--security-opt=no-new-privileges:true"
     ];
-    serviceName = containerService;
   };
 
   systemd.services = {
