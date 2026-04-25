@@ -49,6 +49,9 @@ in {
         "--network-alias=torrent-vpn"
         "--network=${networkName}"
       ];
+      labels = {
+        "dev.dozzle.group" = groupName;
+      };
     };
     "${containerNames.client}" = {
       image = "ghcr.io/hotio/qbittorrent:release";
@@ -77,6 +80,9 @@ in {
         "--health-timeout=10s"
         "--network=container:${containerNames.vpn}"
       ];
+      labels = {
+        "dev.dozzle.group" = groupName;
+      };
     };
     "${containerNames.trackers}" = {
       image = "ghcr.io/hotio/prowlarr:release";
@@ -103,6 +109,9 @@ in {
         "--health-timeout=10s"
         "--network=container:${containerNames.vpn}"
       ];
+      labels = {
+        "dev.dozzle.group" = groupName;
+      };
     };
     "${containerNames.shows}" = {
       image = "ghcr.io/hotio/sonarr:release";
@@ -129,6 +138,9 @@ in {
         "--health-timeout=10s"
         "--network=container:${containerNames.vpn}"
       ];
+      labels = {
+        "dev.dozzle.group" = groupName;
+      };
     };
     "${containerNames.movies}" = {
       image = "ghcr.io/hotio/radarr:release";
@@ -155,6 +167,9 @@ in {
         "--health-timeout=10s"
         "--network=container:${containerNames.vpn}"
       ];
+      labels = {
+        "dev.dozzle.group" = groupName;
+      };
     };
     "${containerNames.flaresolverr}" = {
       image = "ghcr.io/flaresolverr/flaresolverr:latest";
@@ -178,6 +193,9 @@ in {
         "--health-timeout=10s"
         "--network=container:${containerNames.vpn}"
       ];
+      labels = {
+        "dev.dozzle.group" = groupName;
+      };
     };
   };
 
