@@ -3,4 +3,5 @@ let
 in
 {
   "vpn.age".publicKeys = [ key ];
+  "immich.age".publicKeys = [ key ];
 }

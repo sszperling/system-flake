@@ -9,6 +9,9 @@
       vpn = {
         file = ./vpn.age;
       };
+      immich = {
+        file = ./immich.age;
+      };
     };
   };
 }
