@@ -20,7 +20,7 @@ in {
   # Containers
   virtualisation.oci-containers.containers = {
     "${containerNames.ml}" = {
-      image = "ghcr.io/immich-app/immich-machine-learning:${immichVersion}-rocm";
+      image = "ghcr.io/immich-app/immich-machine-learning:${immichVersion}";
       environment = {
         "GUNICORN_CMD_ARGS" = "--no-control-socket";
         "IMMICH_HELMET_FILE" = "/data/helmet.json";
