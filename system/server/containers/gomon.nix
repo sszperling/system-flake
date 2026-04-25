@@ -29,6 +29,8 @@ in {
     log-driver = "journald";
     extraOptions = [
       "--device=/dev/dri/renderD128:/dev/dri/renderD128:rwm"
+      "--group-add=${builtins.toString config.users.groups.render.gid}"
+      "--group-add=${builtins.toString config.users.groups.video.gid}"
       "--network-alias=${containerName}"
       "--network=${networkName}"
       "--security-opt=no-new-privileges:true"

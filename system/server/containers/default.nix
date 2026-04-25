@@ -11,6 +11,7 @@ in {
     (import ./dozzle.nix containerArgs)
     (import ./freshrss.nix containerArgs)
     (import ./gomon.nix containerArgs)
+    (import ./immich.nix containerArgs)
     (import ./ntfy.nix containerArgs)
     (import ./the-bay.nix containerArgs)
   ];
