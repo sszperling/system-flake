@@ -19,7 +19,7 @@ in {
       "${storageMount}/media:/media:rw"
       "${dataDir}/service/cache:/cache:rw"
       "${dataDir}/service/config:/config:rw"
-      "${dataDir}/theme-park/jellyfin/98-themepark:/etc/cont-init.d/98-themepark:rw"
+      "${./theme-park/jellyfin/98-themepark}:/etc/cont-init.d/98-themepark:rw"
     ];
     ports = [
       "${tcpPort}:${tcpPort}/tcp"

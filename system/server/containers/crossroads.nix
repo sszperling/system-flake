@@ -19,7 +19,7 @@ in {
     volumes = [
       "${dataDir}/data:/data:rw"
       "${dataDir}/letsencrypt:/etc/letsencrypt:rw"
-      "${dataDir}/theme-park/nginx-proxy-manager/98-themepark:/etc/cont-init.d/98-themepark:rw"
+      "${./theme-park/nginx-proxy-manager/98-themepark}:/etc/cont-init.d/98-themepark:rw"
     ];
     ports = [
       "80:80/tcp"

@@ -68,7 +68,7 @@ in {
       volumes = [
         "${storageMount}:/data:rw"
         "${dataDir}/qbittorrent/config:/config:rw"
-        "${dataDir}/theme-park/qbittorrent/98-themepark:/etc/cont-init.d/98-themepark:rw"
+        "${./theme-park/qbittorrent/98-themepark}:/etc/cont-init.d/98-themepark:rw"
       ];
       dependsOn = [ containerNames.vpn ];
       log-driver = "journald";
@@ -97,7 +97,7 @@ in {
       };
       volumes = [
         "${dataDir}/prowlarr/config:/config:rw"
-        "${dataDir}/theme-park/prowlarr/98-themepark:/etc/cont-init.d/98-themepark:rw"
+        "${./theme-park/prowlarr/98-themepark}:/etc/cont-init.d/98-themepark:rw"
       ];
       dependsOn = [ containerNames.vpn ];
       log-driver = "journald";
@@ -126,7 +126,7 @@ in {
       volumes = [
         "${storageMount}:/data:rw"
         "${dataDir}/sonarr/config:/config:rw"
-        "${dataDir}/theme-park/sonarr/98-themepark:/etc/cont-init.d/98-themepark:rw"
+        "${./theme-park/sonarr/98-themepark}:/etc/cont-init.d/98-themepark:rw"
       ];
       dependsOn = [ containerNames.vpn ];
       log-driver = "journald";
@@ -155,7 +155,7 @@ in {
       volumes = [
         "${storageMount}:/data:rw"
         "${dataDir}/radarr/config:/config:rw"
-        "${dataDir}/theme-park/radarr/98-themepark:/etc/cont-init.d/98-themepark:rw"
+        "${./theme-park/radarr/98-themepark}:/etc/cont-init.d/98-themepark:rw"
       ];
       dependsOn = [ containerNames.vpn ];
       log-driver = "journald";
