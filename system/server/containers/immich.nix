@@ -122,6 +122,7 @@ in {
       extraOptions = [
         "--cap-drop=NET_RAW"
         "--device=/dev/dri:/dev/dri:rwm"
+        "--group-add=${builtins.toString config.users.groups.video.gid}"
         "--network-alias=immich-server"
         "--network=${networkName}"
         "--security-opt=no-new-privileges:true"
