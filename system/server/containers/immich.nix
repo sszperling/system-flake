@@ -15,7 +15,7 @@ let
   networkName = "${groupName}_default";
   networkService = "docker-network-${networkName}";
   dataDir = containerLib.mkDataDir groupName;
-  immichVersion = "v2";
+  immichVersion = "v3";
 in {
   # Containers
   virtualisation.oci-containers.containers = {
@@ -77,7 +77,7 @@ in {
       };
     };
     "${containerNames.redis}" = {
-      image = "docker.io/valkey/valkey:9@sha256:3b55fbaa0cd93cf0d9d961f405e4dfcc70efe325e2d84da207a0a8e6d8fde4f9";
+      image = "docker.io/valkey/valkey:9@sha256:4963247afc4cd33c7d3b2d2816b9f7f8eeebab148d29056c2ca4d7cbc966f2d9";
       volumes = [
         "${dataDir}/redis:/data:rw"
       ];
