@@ -20,7 +20,7 @@
     eza.enable = true;
 
     direnv = {
-      enable = pkgs.stdenv.hostPlatform.isLinux;
+      enable = true;
       enableZshIntegration = true;
       nix-direnv.enable = true;
     };
