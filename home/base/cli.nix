@@ -36,6 +36,11 @@
         source ${./zsh/completion.zsh}
         source ${./zsh/key-bindings.zsh}
       '';
+      profileExtra = ''
+        if [ -f "$HOME/.zprofile.local" ]; then
+          source "$HOME/.zprofile.local"
+        fi
+      '';
     };
 
     starship = {
