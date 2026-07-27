@@ -11,5 +11,5 @@
     # whatsapp-for-mac # broken
   ];
 
-  programs.element-desktop.enable = pkgs.stdenv.hostPlatform.isLinux; # does not build on mac
+  programs.element-desktop.enable = true;
 }
