@@ -14,6 +14,7 @@ in {
     (import ./immich.nix containerArgs)
     (import ./ntfy.nix containerArgs)
     (import ./the-bay.nix containerArgs)
+    (import ./cartelera.nix containerArgs)
   ];
 
   virtualisation = {
