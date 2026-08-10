@@ -2,6 +2,7 @@
 
 {
   home.packages = with pkgs; [
+    feishin
     ffmpeg
     imagemagick
     inkscape
@@ -10,7 +11,6 @@
     vlc # not provided for mac, use bin instead
     gimp # not provided for mac
     jellyfin-desktop # broken on mac
-    feishin # broken on mac
   ] ++ lib.optionals pkgs.stdenv.hostPlatform.isMacOS [
     vlc-bin
   ];
