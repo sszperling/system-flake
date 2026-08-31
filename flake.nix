@@ -60,6 +60,7 @@
           ./system/base
           ./system/server
           catppuccin.nixosModules.catppuccin
+          nixos-hardware.nixosModules.common-gpu-amd
           agenix.nixosModules.default
           home-manager.nixosModules.home-manager
           nix-index-database.nixosModules.default
